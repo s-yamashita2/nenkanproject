@@ -1,0 +1,261 @@
+/* ============================= */
+/* 📌 基本設定（スクロールなし・全画面表示） */
+/* ============================= */
+* {
+  margin: -2px;
+  padding: 17px;
+  box-sizing: border-box;
+}
+
+body, html {
+  height: 100vh;
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column; /* 📌 上にナビバー、下にカレンダーを配置 */
+  align-items: center;
+}
+
+/* ============================= */
+/* 📌 上部固定ナビゲーションバー（サイドバーを上に配置） */
+/* ============================= */
+.sb-sidenav {
+  width: 100%;
+  height: 60px;
+  background-color: #343a40;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+.sb-sidenav a {
+  color: white;
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  margin: 0 10px;
+  transition: background 0.3s;
+}
+
+.sb-sidenav a:hover {
+  background-color: #495057;
+}
+
+/* ============================= */
+/* 📌 カレンダーエリア（中央配置） */
+/* ============================= */
+.calendar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* 📌 画面中央に配置 */
+  padding: 10px;
+  margin-top: 80px; /* 📌 ナビバーの高さ分を確保 */
+  width: 100vh;
+  height: calc(80vh - 80px);
+}
+
+/* 📌 カレンダー */
+.calendar {
+  width: 90%;
+  max-width: 850px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  text-align: center;
+  height: auto;
+}
+
+/* 📌 カレンダーのヘッダー */
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #4bc74f;
+  color: white;
+  border-radius: 8px;
+  width: 100%;
+}
+
+.calendar-header button {
+  background-color: transparent;
+  border: none;
+  font-size: 18px;
+  color: white;
+  cursor: pointer;
+  padding: 10px;
+}
+
+.calendar-header button:hover {
+  opacity: 0.7;
+}
+
+/* 📌 曜日のデザイン */
+.calendar-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  background-color: #f1f1f1;
+  border-radius: 8px;
+  width: 100%;
+  text-align: center;
+  font-weight: bold;
+  padding: 10px 0;
+}
+
+/* 📌 カレンダーのグリッド */
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+  padding: 10px;
+  width: 100%;
+  height: auto;
+}
+
+/* 📌 カレンダーセル */
+.day-cell {
+  text-align: center;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  cursor: pointer;
+  position: relative;
+  min-height: 70px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}
+
+.day-cell:hover {
+  background-color: #e0e0e0 !important;
+}
+
+/* 📌 メモありの表示（日付の下） */
+.memo-indicator {
+  font-size: 12px;
+  font-weight: bold;
+  color: red;
+  margin-top: 5px;
+}
+
+/* 📌 土日の色 */
+.sunday {
+  background-color: #ffebee !important;
+  color: red !important;
+}
+
+.saturday {
+  background-color: #e3f2fd !important;
+  color: blue !important;
+}
+
+/* ============================= */
+/* 📌 レスポンシブ対応（スマホ・タブレット対応） */
+/* ============================= */
+@media (max-width: 768px) {
+  .sb-sidenav {
+      height: 50px;
+  }
+  .calendar-container {
+      margin-top: 60px;
+      height: calc(100vh - 60px);
+  }
+}
+
+@media (max-width: 480px) {
+  .calendar {
+      width: 95%;
+  }
+  .day-cell {
+      min-height: 80px;
+  }
+}
+
+/* ============================= */
+/* 📌 メモ入力モーダル */
+/* ============================= */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+}
+
+/* 📌 モーダルのコンテンツ */
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 450px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* 📌 メモ入力フィールド */
+textarea {
+  width: 100%;
+  height: 120px;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  resize: none;
+  margin-bottom: 15px;
+}
+
+/* 📌 ボタン */
+.modal-buttons {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.modal-buttons button {
+  flex: 1;
+  margin: 5px;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* 📌 保存ボタン（緑） */
+#saveMemo {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+}
+
+/* 📌 閉じるボタン（赤） */
+#closeModal {
+  background-color: #f44336;
+  color: white;
+  border: none;
+}
+
+.calendar .day {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ddd;
+  font-size: 16px;
+}
+.calendar {
+  grid-template-rows: repeat(6, 1fr); /* 6行でも均等配置 */
+}
